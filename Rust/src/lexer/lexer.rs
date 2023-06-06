@@ -38,7 +38,10 @@ pub enum Token {
 }
 
 pub struct Lexer {
-
+    input: Vec<usize>,
+    position: usize,
+    read_position: usize,
+    ch: u8,
 }
 
 impl Lexer {
