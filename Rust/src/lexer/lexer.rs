@@ -112,7 +112,11 @@ impl Lexer {
     }
 
     fn peek(&mut self) -> u8 {
-
+        if self.position >= self.input.len() {
+            return 0;
+        } else {
+            return self.input[self.read_position];
+        }
     }
 
     fn read_char(&mut self) {
@@ -132,11 +136,19 @@ impl Lexer {
     }
 
     fn read_ident(&mut self) -> String {
-
+        let position = self.position;
+        while self.ch.is_ascii_alphabetic() || self.ch == b'_' {
+            self.read_char()
+        }
+        return String::from_utf8_lossy(&self.input[position..self.position]).to_string();
     }
 
     fn read_int(&mut self) -> String {
-
+        let position = self.position;
+        while self.ch.is_ascii_digit() {
+            self.read_char()
+        }
+        return String::from_utf8_lossy(&self.input[position..self.position]).to_string();
     }
 
 }
