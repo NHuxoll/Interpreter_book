@@ -22,6 +22,7 @@ pub enum Token {
     Comma,
     Semicolon,
     Plus,
+    Minus,
     LParen,
     RParen,
     LSquirly,
@@ -57,7 +58,57 @@ impl Lexer {
     }
 
     fn next_token(&mut self) -> Result<Token> {
+        self.skip_whitespace();
 
+        let tok = match self.ch {
+            b'{' => Token::LSquirly,
+            b'}' => Token::RSquirly,
+            b'(' => Token::LParen,
+            b')' => Token::RParen,
+            b'+' => Token::Plus,
+            b'-' => Token::Minus,
+            b';' => Token::Semicolon,
+            b',' => Token::Comma,
+            b'!' => {
+                if self.peek() == b'=' {
+                    self.read_char();
+                    Token::NotEqual
+                } else {
+                    Token::Bang
+                }
+            },
+            b'>' => Token::GreaterThan,
+            b'<' => Token::LessThan,
+            b'*' => Token::Asterisk,
+            b'/' => Token::ForwardSlash,
+            b'=' => {
+                if self.peek() == b'=' {
+                    self.read_char();
+                    Token::Equal
+                } else {
+                    Token::Assign
+                }
+            },
+            b'a'..=b'z' | b'A'..=b'Z' | b'_' => {
+                let ident = self.read_ident();
+                return Ok(match ident.as_str() {
+                    "fn" => Token::Function,
+                    "let" => Token::Let,
+                    "if" => Token::If,
+                    "else" => Token::Else,
+                    "true" => Token::True,
+                    "false" => Token::False,
+                    "return" => Token::Return,
+                    _ => Token::Ident(ident)
+                });
+            },
+            b'0'..=b'9' => return Ok(Token::Int(self.read_int())),
+            0 => Token::Eof,
+            _ => todo!("Not yet implemented...")
+
+        };
+        self.read_char();
+        return Ok(tok);
     }
 
     fn peek(&mut self) -> u8 {
