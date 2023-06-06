@@ -38,7 +38,7 @@ pub enum Token {
 }
 
 pub struct Lexer {
-    input: Vec<usize>,
+    input: Vec<u8>,
     position: usize,
     read_position: usize,
     ch: u8,
@@ -46,7 +46,14 @@ pub struct Lexer {
 
 impl Lexer {
     fn new(input: String) -> Lexer {
-
+        let mut lex: Lexer = Lexer {
+            position: 0,
+            read_position: 0,
+            ch: 0,
+            input: input.into_bytes(),
+        };
+        lex.read_char();
+        return lex; 
     }
 
     fn next_token(&mut self) -> Result<Token> {
