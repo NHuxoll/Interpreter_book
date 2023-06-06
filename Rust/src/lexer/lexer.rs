@@ -126,7 +126,9 @@ impl Lexer {
     }
 
     fn skip_whitespace(&mut self) {
-
+        while self.ch.is_ascii_whitespace() {
+            self.read_char();
+        }
     }
 
     fn read_ident(&mut self) -> String {
