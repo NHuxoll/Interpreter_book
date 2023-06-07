@@ -11,7 +11,7 @@ pub struct Lexer {
 }
 
 impl Lexer {
-    fn new(input: String) -> Lexer {
+    pub fn new(input: String) -> Lexer {
         let mut lex: Lexer = Lexer {
             position: 0,
             read_position: 0,
@@ -22,7 +22,7 @@ impl Lexer {
         return lex; 
     }
 
-    fn next_token(&mut self) -> Result<Token> {
+    pub fn next_token(&mut self) -> Result<Token> {
         self.skip_whitespace();
 
         let tok = match self.ch {

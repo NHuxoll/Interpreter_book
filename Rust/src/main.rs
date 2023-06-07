@@ -2,5 +2,5 @@ mod lexer;
 mod token;
 mod repl;
 fn main() {
-    println!("Hello, world!");
+    let rep = repl::repl::Start();
 }
