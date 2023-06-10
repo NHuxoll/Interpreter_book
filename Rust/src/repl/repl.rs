@@ -1,22 +1,21 @@
 use crate::lexer::lexer::Lexer;
 use crate::token::token::Token;
-use std::io;
 
 #[allow(dead_code)]
-pub fn Start() {
-    let mut buffer = String::new();
-    let stdin = io::stdin();
-    while stdin.read_line(&mut buffer).is_ok() {
-        let trimmed = buffer.trim_end();
-        let mut lex = Lexer::new(trimmed.to_string());
-
-        while let Ok(tok) = lex.next_token() {
-            if tok != Token::Eof {
-            println!("{:?}", tok);
-            } else {
-                break;
+pub fn Start(){
+    std::io::stdin().lines().for_each(|line| {
+        if let Ok(line) = line {
+            let mut tokenizer = Lexer::new(line);
+            
+            while let Ok(token) = tokenizer.next_token() {
+                println!("{:?}", token);
+                if let Token::Eof = token {
+                    break;
+                }
             }
         }
-     }
+    });
+    return;
 }
+
 

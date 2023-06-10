@@ -1,6 +1,6 @@
 mod lexer;
-mod token;
 mod repl;
+mod token;
 fn main() {
     let rep = repl::repl::Start();
 }
