@@ -4,7 +4,8 @@
 mod test {
     use anyhow::Result;
 
-    use super::{Token, Lexer};
+    use crate::lexer::lexer::Lexer;
+    use crate::token::token::Token;
 
     #[test]
     fn get_next_token() -> Result<()> {
@@ -95,7 +96,7 @@ mod test {
 
 
             Token::Bang,
-            Token::Dash,
+            Token::Minus,
             Token::ForwardSlash,
             Token::Asterisk,
             Token::Int(String::from("5")),
