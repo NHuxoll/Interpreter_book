@@ -39,6 +39,8 @@ func New(l *lexer.Lexer) *Parser {
 		l:      l,
 		errors: []string{},
 	}
+        p.prefixParseFns = make(map[token.TokenType]prefixParseFn)
+        p.registerPrefix(token.IDENT, p.parseIdentifier)
 
 	p.nextToken()
 	p.nextToken()
@@ -77,6 +79,10 @@ func (p *Parser) peekTokenIs(t token.TokenType) bool {
 
 func (p *Parser) curTokenIs(t token.TokenType) bool {
 	return p.curToken.Type == t
+}
+
+func (p *Parser) parseIdentifier() ast.Expression {
+	return &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
 }
 
 func (p *Parser) parseLetStatement() *ast.LetStatement {
