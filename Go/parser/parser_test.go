@@ -339,7 +339,6 @@ func TestOperatotPrecedenceParsing(t *testing.T) {
 	}
 }
 
-
 func testIdentifier(t *testing.T, exp ast.Expression, value string) bool {
 	ident, ok := exp.(*ast.Identifier)
 	if !ok {
@@ -357,4 +356,17 @@ func testIdentifier(t *testing.T, exp ast.Expression, value string) bool {
 		return false
 	}
 	return true
+}
+
+func testLiteralExpression(t *testing.T, exp ast.Expression, expected interface{}) bool {
+	switch v := expected.(type) {
+	case int:
+	    return testIntegerLiteral(t, exp, int64(v))
+	case int64:
+	    return testIntegerLiteral(t, exp, v)
+	case string:
+	    return testIdentifier(t, exp, v)
+	}
+	t.Errorf("type of exp not handled. got=%T", exp)
+	return false
 }
