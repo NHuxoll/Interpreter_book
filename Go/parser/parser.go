@@ -207,7 +207,6 @@ func (p *Parser) parseExpression(precedence int) ast.Expression {
 	}
 	return leftExp
 
-	return leftExp
 } 
 
 func (p *Parser) parseExpressionStatement() *ast.ExpressionStatement {
