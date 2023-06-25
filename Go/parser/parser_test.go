@@ -279,7 +279,7 @@ func TestOperatotPrecedenceParsing(t *testing.T) {
 	}{
 		{
 			"-a * b",
-			"((-a) * (b))",
+			"((-a) * b)",
 		},
 		{
 			"!-a",
@@ -291,7 +291,7 @@ func TestOperatotPrecedenceParsing(t *testing.T) {
 		},
 		{
 			"a + b - c",
-			"((a+  b) - c)",
+			"((a +  b) - c)",
 		},
 		{
 			"a * b * c",
