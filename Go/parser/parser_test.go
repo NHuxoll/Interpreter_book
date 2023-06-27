@@ -5,7 +5,6 @@ import (
 	"Go/monkey/lexer"
 	"fmt"
 	"testing"
-	"unicode/utf8"
 )
 
 func checkParserErrors(t *testing.T, p *Parser) {
