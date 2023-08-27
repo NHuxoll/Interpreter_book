@@ -29,11 +29,10 @@ func (l *Lexer) readChar() {
 
 func newToken(tokenType token.TokenType, ch byte) token.Token {
 	return token.Token{Type: tokenType, Literal: string(ch)}
-
 }
 
 func isLetter(ch byte) bool {
-	return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <='Z' || ch =='_'
+	return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_'
 }
 
 func (l *Lexer) readIdentifier() string {
@@ -72,19 +71,19 @@ func (l *Lexer) peekChar() byte {
 
 func (l *Lexer) NextToken() token.Token {
 	var tok token.Token
-	
+
 	l.skipWhitespace()
 
 	switch l.ch {
 	case '=':
 		if l.peekChar() == '=' {
-			ch := l.ch 
+			ch := l.ch
 			l.readChar()
 			literal := string(ch) + string(l.ch)
 			tok = token.Token{Type: token.EQ, Literal: literal}
 		} else {
-		    tok = newToken(token.ASSIGN, l.ch)
-	    }
+			tok = newToken(token.ASSIGN, l.ch)
+		}
 	case ';':
 		tok = newToken(token.SEMICOLON, l.ch)
 	case '(':
@@ -103,8 +102,8 @@ func (l *Lexer) NextToken() token.Token {
 			l.readChar()
 			literal := string(ch) + string(l.ch)
 			tok = token.Token{Type: token.NOT_EQ, Literal: literal}
-		} else {	    
-            tok = newToken(token.BANG, l.ch)
+		} else {
+			tok = newToken(token.BANG, l.ch)
 		}
 	case '/':
 		tok = newToken(token.SLASH, l.ch)
@@ -127,7 +126,7 @@ func (l *Lexer) NextToken() token.Token {
 			tok.Type = token.LookupIdent(tok.Literal)
 			return tok
 		} else if isDigit(l.ch) {
-            tok.Type = token.INT
+			tok.Type = token.INT
 			tok.Literal = l.readNumber()
 			return tok
 		} else {
