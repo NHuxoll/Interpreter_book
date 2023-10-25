@@ -56,3 +56,5 @@ go.wor
 
 # Go workspace file
 go.work
+Go/evaluator/.null-ls_720792_evaluator_test.go
+Go/object/.null-ls_707259_object.go
