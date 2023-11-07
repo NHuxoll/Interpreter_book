@@ -1,19 +1,21 @@
 package repl
 
 import (
-	"Go/monkey/evaluator"
-	"Go/monkey/lexer"
-	"Go/monkey/parser"
 	"bufio"
 	"fmt"
 	"io"
+
+	"Go/monkey/evaluator"
+	"Go/monkey/lexer"
+	"Go/monkey/object"
+	"Go/monkey/parser"
 )
 
 const PROMPT = ">> "
 
 func Start(in io.Reader, out io.Writer) {
 	scanner := bufio.NewScanner(in)
-
+	env := object.NewEnvironment()
 	for {
 		fmt.Fprint(out, PROMPT)
 		scanned := scanner.Scan()
@@ -32,7 +34,7 @@ func Start(in io.Reader, out io.Writer) {
 			continue
 		}
 
-		evaluated := evaluator.Eval(program)
+		evaluated := evaluator.Eval(program, env)
 		if evaluated != nil {
 			io.WriteString(out, evaluated.Inspect())
 			io.WriteString(out, "\n")
